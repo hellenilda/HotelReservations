@@ -16,7 +16,6 @@ class InferenceRequest(BaseModel):
     no_of_adults: int
     no_of_children: int
     type_of_meal_plan: str
-    # Adicione outros campos conforme necessário
 
 # Função para carregar o modelo do S3
 def load_model():
@@ -45,7 +44,6 @@ async def inference(data: InferenceRequest):
             data.no_of_adults,
             data.no_of_children,
             data.type_of_meal_plan,
-            # Adicione aqui o mapeamento para outros campos do modelo
         ]
 
         # Fazer a predição
