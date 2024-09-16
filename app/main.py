@@ -4,9 +4,7 @@ import boto3
 import joblib
 import os
 from dotenv import load_dotenv
-
-# Carregar as variáveis do arquivo .env
-load_dotenv()
+import tarfile
 
 # Inicializar a aplicação FastAPI
 app = FastAPI()
@@ -17,16 +15,16 @@ class InferenceRequest(BaseModel):
     no_of_children: int
     type_of_meal_plan: str
 
-# Função para carregar o modelo do S3
+def extract_model(tar_gz_path, extract_path):
+    with tarfile.open(tar_gz_path, "r:gz") as tar:
+        tar.extractall(path=extract_path)
+
+def load_model_from_local_path(model_path):
+    return joblib.load(model_path)
+
 def load_model():
-    s3 = boto3.client('s3',
-                      aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-                      aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))
-    bucket = os.getenv('S3_BUCKET_NAME')
-    model_path = os.getenv('MODEL_PATH')
-    local_model_path = '/tmp/modelo_local.pkl'  # Salvar no diretório temporário
-    s3.download_file(bucket, model_path, local_model_path)
-    model = joblib.load(local_model_path)
+    extract_model('model/model.tar.gz', '/tmp/modelo/')
+    model = load_model_from_local_path('model/trained_model/xgboost-model.pkl')
     return model
 
 # Carregar o modelo no startup da aplicação
@@ -39,17 +37,13 @@ def startup_event():
 @app.post("/api/v1/inference")
 async def inference(data: InferenceRequest):
     try:
-        # Preparar os dados para inferência
         features = [
             data.no_of_adults,
             data.no_of_children,
             data.type_of_meal_plan,
         ]
 
-        # Fazer a predição
         result = model.predict([features])[0]
-
-        # Retornar o resultado
         return {"result": int(result)}
 
     except Exception as e:
