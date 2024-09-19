@@ -6,9 +6,10 @@ API desenvolvida com **FastAPI** para realizar inferências com um modelo de Mac
 
 ## Sumário
 1. [Processo de desenvolvimento](#processo-de-desenvolvimento)
-2. [Execução do projeto](#execucao-do-projeto)
-3. [Deploy na AWS](#deploy-na-aws)
-4. [Resultados](#resultados)
+2. [Execução do Projeto em Servidor Local](#execucao-do-projeto-em-servidor-local)
+3. [Execução com Docker](#execucao-com-docker)
+4. [Deploy na AWS](#deploy-na-aws)
+5. [Resultados](#resultados)
 
 ---
 
@@ -89,7 +90,7 @@ README.md                  # Documentação do projeto
 
 ---
 
-## Execução do Projeto
+## Execução do Projeto em Servidor Local
 
 ### Pré-requisitos
 - **Python 3.10**
@@ -181,9 +182,10 @@ README.md                  # Documentação do projeto
 
 ### [Informações sobre o processo de deploy na AWS] -->
 
-### Containerização com Docker
+### Execução com Docker
 
 Para garantir que a aplicação FastAPI seja executada de forma consistente em diferentes ambientes, você pode containerizá-la utilizando Docker. A seguir estão os passos e a configuração necessária para isso.
+> **OBS.**: Não precisa realizar o processo de execução em servidor local se for conteinerizar a aplicação com Docker.
 
 ### Dockerfile
 
