@@ -251,3 +251,6 @@ Relatório de classificação:
    macro avg       0.90      0.89      0.89     25391
 weighted avg       0.89      0.89      0.89     25391
 ```
+
+## Melhorias futuras
+* Balancear corretamente o dataset original
